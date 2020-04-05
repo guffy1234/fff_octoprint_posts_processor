@@ -25,3 +25,4 @@ You have to press "Yes" button.
 Octo: URL|Octoprint URL|
 Octo: API|High speed for travel movements X & Y (mm/min).||
 Octo: Start print|Start printing immediatelly|**false**|
+Curl: Hide|Hide curl application|**false**|

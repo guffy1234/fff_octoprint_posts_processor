@@ -33,16 +33,18 @@ tolerance = spatial(0.002, MM);
 highFeedrate = (unit == MM) ? 6000 : 236;
 
 properties = {
-  OctoUrl: "http://octopi.local", 
+  OctoUrl: "", 
   OctoApi: "",
-  OctoStart:false 
+  OctoStart:false, 
+  CurlHide:false
 };
 
 // user-defined property definitions
 propertyDefinitions = {
-  OctoUrl: {title:"Octo URL", description:"Octoprint URL", group:0, type:"string", default:"http://octopi.local"},
-  OctoApi: {title:"Octo API", description:"Octoprint API key", group:0, type:"string"},
-  OctoStart: {title:"Octo Start print", description:"Start printing immediatelly", group:0, type:"boolean", default:false}
+  OctoUrl: {title:"Octo: URL", description:"Octoprint URL", group:0, type:"string", default:""},
+  OctoApi: {title:"Octo: API", description:"Octoprint API key", group:0, type:"string", default:""},
+  OctoStart: {title:"Octo: Start print", description:"Start printing immediatelly", group:0, type:"boolean", default:false},
+  CurlHide: {title:"Curl: Hide", description:"Hide curl application", group:0, type:"boolean", default:false}
 };
 // needed for range checking, will be effectively passed from Fusion
 var printerLimits = {
@@ -174,14 +176,16 @@ function UploadToOctoprint()
 
   var params = '-k -H "X-Api-Key: ' +
     properties.OctoApi +
-    '" -F "select=false" -F "print=false" -F "file=@' +
+    '" -F "select=false" -F "print=' +
+    properties.OctoStart +
+    '" -F "file=@' +
     getOutputPath() +
     '" "' +
     properties.OctoUrl +
     '/api/files/local"';
 
   log(params);
-  execute("curl", params, false, "");
+  execute("curl", params, properties.CurlHide, "");
 }
 
 function onTerminate()
