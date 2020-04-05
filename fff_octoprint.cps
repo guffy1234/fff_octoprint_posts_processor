@@ -36,6 +36,7 @@ properties = {
   OctoUrl: "", 
   OctoApi: "",
   OctoStart:false, 
+  OctoUpload:true,
   CurlHide:false
 };
 
@@ -44,6 +45,7 @@ propertyDefinitions = {
   OctoUrl: {title:"Octo: URL", description:"Octoprint URL", group:0, type:"string", default:""},
   OctoApi: {title:"Octo: API", description:"Octoprint API key", group:0, type:"string", default:""},
   OctoStart: {title:"Octo: Start print", description:"Start printing immediatelly", group:0, type:"boolean", default:false},
+  OctoUpload: {title:"Octo: Upload", description:"You can disable uploading", group:0, type:"boolean", default:true},
   CurlHide: {title:"Curl: Hide", description:"Hide curl application", group:0, type:"boolean", default:false}
 };
 // needed for range checking, will be effectively passed from Fusion
@@ -159,8 +161,7 @@ function onComment(message) {
   writeComment(message);
 }
 
-function UploadToOctoprint()
-{
+function UploadToOctoprint() {
   // var form = new FormData();
   // form.append("file", getOutputPath(), getOutputPath());
   // form.append("select", "true", "");
@@ -188,9 +189,10 @@ function UploadToOctoprint()
   execute("curl", params, properties.CurlHide, "");
 }
 
-function onTerminate()
-{
-  UploadToOctoprint();
+function onTerminate() {
+  if (properties.OctoUpload) {
+    UploadToOctoprint();
+  }
 }
 
 function onSection() {
