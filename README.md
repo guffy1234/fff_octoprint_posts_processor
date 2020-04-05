@@ -9,6 +9,8 @@ It seems that XMLHttpRequest class exists in the PP objects model, but unfortuna
 So the post processor uses CURL for uploading.
 You can take CURL [here](https://curl.haxx.se/download.html) and have to put binary files to same foleder where post processor file resides.
 
+![screenshot_curl](/screenshot_curl.jpg "screenshot_curl")
+
 Due to existing execute function call in the code of the post processor Fusion 360 (launching curl) 
 will warn you with following dialogue.
 
